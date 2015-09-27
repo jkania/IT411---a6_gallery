@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gallery</title>
+<link href="_css/site.css" rel="stylesheet">
+<style>
+#gallery {
+  float: left;
+  width: 90px;
+  margin-right: 30px;
+  margin-left: 10px;
+  border-right: white 1px dotted;
+}
+#gallery img {
+  display: inline-block;
+  margin: 0 0 10px 0;
+  border: 1px solid rgb(0,0,0);
+  opacity:0.5;
+}
+
+#photo {
+  margin-left: 150px;
+  position: relative;
+}
+#photo img {
+  position: absolute;
+}
+
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#gallery a').mouseover(function() {
+        $(this).fadeTo(200, 0.5);
+    })
+    .mouseleave(function() {
+        $(this).fadeTo(200, 1);
+  });
+    
+  $('#gallery a').click(function(event) {
+    // Don't follow the link, which is the default behavior when a link is clicked.
+    event.preventDefault();
+
+    // Get the path to the new large image from the <a> tag.
+    var large_image_path = $(this).attr('href');
+
+    // Get a reference to the large image currently displayed.
+    var current_large_image = $('#photo img');
+
+    // Create HTML for the new large image.
+    var new_large_image = $('<img src="' + large_image_path +'">');
+
+    // Make the new large image invisible
+    new_large_image.hide();
+
+    // Add it as a child to the #photo div element.
+    $('#photo').prepend(new_large_image);
+
+    // Fade in the new image.
+    new_large_image.fadeIn(2000);
+
+    // Fade out the current image and remove it from the DOM.
+    current_large_image.fadeOut(2000,
+                                function(){$(this).remove();}
+    );
+  }); // end click
+
+  $('#gallery a:first').click();
+
+}); // end ready
+</script>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="header">
+    <p class="logo">IT 411 - Assignment 6 - Jennifer Kania <i class="mm">Gallery</i></p>
+  </div>
+
+
+  <div class="content">
+    <div class="main">
+      <h1>Gallery</h1>
+      <div id="gallery">
+        <a href="_images/large/blue.jpg"><img src="_images/small/blue_color.jpg" width="70" height="70" alt="golf balls"></a>
+        <a href="_images/large/green.jpg"><img src="_images/small/green_color.jpg" width="70" height="70" alt="rock wall"></a>
+        <a href="_images/large/orange.jpg"><img src="_images/small/orange_color.jpg" width="70" height="70" alt="old course"></a>
+        <a href="_images/large/purple.jpg"><img src="_images/small/purple_color.jpg" width="70" height="70" alt="tees"></a>
+        <a href="_images/large/red.jpg"><img src="_images/small/red_color.jpg" width="70" height="70" alt="tree"></a>
+        <a href="_images/large/yellow.jpg"><img src="_images/small/yellow_color.jpg" width="70" height="70" alt="ocean course"></a>
+      </div>
+      <div id="photo"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Created by Jennifer Kania</p>
+  </div>
+</div>
+
+</body>
+</html>
